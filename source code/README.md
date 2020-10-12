@@ -14,7 +14,7 @@ Everything is done to make it easy to understand the script. This script uses IW
 
 #### Avoid that the bank is loaded in the maps where the bank is not active or not present
 ```
-    if (getDvar("g_gametype") != "zclassic") {
+    	if (getDvar("g_gametype") != "zclassic") {
 		return;
 	}
 	if (getDvar("mapname") != "zm_buried" && getDvar("mapname") != "zm_highrise" && getDvar("mapname") != "zm_transit") {
