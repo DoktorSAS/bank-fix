@@ -16,7 +16,7 @@ Everything is done to make it easy to understand the script. This script uses IW
 
 To implement these features takes two minutes, just follow this guide carefully and you will understand how to implement the bank on your servers.
 ##### Guide  setp by step
-1. Download the [**compiled files**]() and not the source code 
+1. Download the [**compiled files**](https://github.com/DoktorSAS/bank-fix) and not the source code 
 2. Take/Copy the **BankFix.dll** file and put it in the **plugins** folder of **IW4M Admin**
 3. Take/Copy the file **_zm_banking.gsc** and put it in the plutonium **zombies** folder. Follow the path **t6r/maps/mp/** and if the zombies folder doesn't exist you create it and put the file in it, otherwise if the folder already exists you put directly in it.
 4. Start the server and start IW4M Admin and if you have done all the steps correctly then you will have the bank working
