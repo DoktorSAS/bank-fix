@@ -14,10 +14,26 @@ Everything is done to make it easy to understand the script. This script uses IW
 
 #### Avoid that the bank is loaded in the maps where the bank is not active or not present
 ```
-    	if (getDvar("g_gametype") != "zclassic") {
+    if (getDvar("g_gametype") != "zclassic") {
 		return;
 	}
 	if (getDvar("mapname") != "zm_buried" && getDvar("mapname") != "zm_highrise" && getDvar("mapname") != "zm_transit") {
 		return;
 	}
+```
+
+#### Avoid writing dvar from multiple users
+The dvar that contains the bank data must be accessible to only one user at a time because every time the user takes the data from the dvar automatically remove it from the dvar so as to decrease the size of the dvar
+```
+   init(){
+        ...
+       level.looking_for_bank_money = false; 
+   }
+   setAccountValue(){
+   while(level.looking_for_bank_money || getDvar("bank_clients_information") == "") 
+		wait 0.01;
+	level.looking_for_bank_money = true; 	
+    ...
+	level.looking_for_bank_money = false; 
+   }
 ```
