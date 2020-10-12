@@ -1,4 +1,4 @@
-# Black op II Zombies Bank Fix {RELEASE Folder}
+# Black op II Zombies Bank Fix {RELEASE}
 Developed by [**fed**](https://github.com/fedddddd) & [**DoktorSAS**](https://github.com/DoktorSAS)
 
 Through these files it will be possible to get the Zombies Server Bank Fully Working. Implementing the following scripts is very easy, in fact they are only two drag and drop files.
