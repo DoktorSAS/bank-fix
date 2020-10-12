@@ -1,4 +1,4 @@
-# Black op II Zombies Bank Fix {RELEASE Folder}
+# Black op II Zombies Bank Fix {SOURCE CODE}
 Developed by [**fed**](https://github.com/fedddddd) & [**DoktorSAS**](https://github.com/DoktorSAS)
 
 - [**fed**](https://github.com/fedddddd) has dedicated himself to the IW4M plugin in C#
