@@ -21,6 +21,10 @@ To implement these features takes two minutes, just follow this guide carefully 
 3. Take/Copy the file **_zm_banking.gsc** and put it in the plutonium **zombies** folder. Follow the path **t6r/maps/mp/** and if the zombies folder doesn't exist you create it and put the file in it, otherwise if the folder already exists you put directly in it.
 4. Start the server and start IW4M Admin and if you have done all the steps correctly then you will have the bank working
 
+### How to disable bank print?
+
+1. Write on your .cfg file **set bank_print 0**
+
 ### Video Preview
 [![Watch the video](https://images2.alphacoders.com/795/795968.png)](https://youtu.be/7UgtPc1LcqU)
 
