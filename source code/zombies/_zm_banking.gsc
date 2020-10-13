@@ -7,77 +7,100 @@
 #include maps/mp/zombies/_zm_utility;
 #include maps/mp/_utility;
 #include common_scripts/utility;
+
 /*
-	Developer: DoktorSAS & fed
-	Discord: Discord.io/Sorex
-	Mod: Bank Fix
-	Description: This is a script able to fix the bank problem
-	
-	Copyright: The script was created by DoktorSAS & fed and no one else can 
-			   say they created it. The script is free and accessible to 
-			   everyone, it is not possible to sell the script.
+*	Developer: DoktorSAS & fed
+*	Discord: Discord.io/Sorex
+*	Mod: Bank Fix
+*	Description: This is a script able to fix the bank problem
+*	
+*	Copyright: The script was created by DoktorSAS & fed and no one else can 
+*			   say they created it. The script is free and accessible to 
+*			   everyone, it is not possible to sell the script.
 */
+
 init()
 {
 	/*
-		It is necessary to avoid that the bank 
-		is loaded in the maps where the bank is not active or not present
+	*	These are the checks to make sure to avoid the bank that is not active or not present in certain maps (Like Mob of the Dead).
 	*/
+
 	if (getDvar("g_gametype") != "zclassic") {
 		return;
 	}
+
 	if (getDvar("mapname") != "zm_buried" && getDvar("mapname") != "zm_highrise" && getDvar("mapname") != "zm_transit") {
 		return;
 	}
+
 	onplayerconnect_callback( ::onplayerconnect_bank_deposit_box );
+
 	if ( !isDefined( level.ta_vaultfee ) )
 	{
 		level.ta_vaultfee = 100;
 	}
+
 	if ( !isDefined( level.ta_tellerfee ) )
 	{
 		level.ta_tellerfee = 100;
 	}
+
 	/*
-		level.looking_for_bank_money is the variable which allows you to manage when multiple 
-		users are trying to access the dvar containing the bank data
+	*	level.looking_for_bank_money 
+		This is the variable which allows you to manage multiple 
+	*	users that are trying to access the dvar containing the bank data.
 	*/
-	level.looking_for_bank_money = false; 
+	level.looking_for_bank_money = false;
+	
 	/*
-		level thread sync_bank_onEnd(); Update bank values on iw4m as soon as the game ends
+	*	level thread sync_bank_onEnd(); 
+		Updates bank values on IW4MAdmin when the game ends.
 	*/
 	level thread sync_bank_onEnd();
 }
+
 sync_bank_onEnd() {
 	level waittill("end_game");
 	setAccountValues();
 }
+
 setAccountValues() {
+
 	/*
-		Update bank values on iw4m as soon as the game ends. All the information is 
-		written on the log file that will be read by iw4m admin
+	*	This will update the bank values on IW4M as soon as the game ends. All the information is 
+	*	written on the log file that will be read by IW4Madmin.
 	*/
+
 	players = [];
 	for (i = 0; i < level.players.size; i++) {
 		players[i] = [];
 		players[i]["Guid"] = level.players[i] getGuid();
 		players[i]["Money"] = level.players[i].account_value;
-
 	}
 	logPrint("IW4MBANK_ALL;" + json_encode(players) + "\n"); // Pirnt on the log file
 }
+
 main()
 {
+
+	/*
+	*	Checks to make sure this isn't being ran in other zombie gamemodes that may bug out and checks if
+	*	the map being played is one of the supported ones.
+	*/
+
 	if (getDvar("g_gametype") != "zclassic") {
 		return;
 	}
+
 	if (getDvar("mapname") != "zm_buried" && getDvar("mapname") != "zm_highrise" && getDvar("mapname") != "zm_transit") {
 		return;
 	}
+
 	if ( !isDefined( level.banking_map ) )
 	{
 		level.banking_map = level.script;
 	}
+
 	level thread bank_teller_init();
 	level thread bank_deposit_box();
 }
@@ -153,27 +176,35 @@ delete_bank_teller()
 	bank_teller_dmg_trig delete();
 	bank_teller_transfer_trig delete();
 }
+
 onPlayerSpawned(){
-    self endon("disconnect"); 
-    /*
-		self thread setAccountValue(); is the process that goes to see the dvar set by the iw4m 
-		plugin. In fact the content of the dvar is extracted and the number of operations that the user can do is updated
+
+    	self endon("disconnect"); 
+    	/*
+	*	self thread setAccountValue(); 
+	*	This is the process that goes to see the dvar set by the IW4M
+	*	plugin. In fact the content of the dvar is extracted and the number of operations that the user can do is updated.
 	*/
+
 	self waittill("spawned_player");
 	/*
-		while(level.looking_for_bank_money || getDvar("bank_clients_information") == "") 
-			wait 0.01;
-		If the dvar is empty or someone is reading the dvar the player remains in a loop and waits for 
-		access to the dvar to withdraw the contents of the bank.
+	*	while(level.looking_for_bank_money || getDvar("bank_clients_information") == "") 
+	*		wait 0.01;
+	*	If the dvar is empty or someone is reading the dvar, the player remains in a loop and waits for 
+	*	access to the dvar to withdraw the contents of the bank.
 	*/
+
 	while(getDvar("bank_clients_information") == "" || !self setAccountValue()) // As long as the value of the bank is not valid then it remains in the loop
 		wait 0.001;
+
 	if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
-    	self iprintln("Your bank ammount is ^2$"+self.account_value*level.bank_deposit_ddl_increment_amount);
-    for(;;){
-        self waittill("spawned_player");
-    }
+    		self iprintln("Your bank amount is ^2$"+self.account_value*level.bank_deposit_ddl_increment_amount);
+
+    	for(;;){
+        	self waittill("spawned_player");
+    	}
 }
+
 setAccountValue() {
 	bank_data = strTok(getDvar("bank_clients_information"), "-"); // The dvar is divided into many elements so many players are in game
 	for (i = 0; i < bank_data.size; i++) {
@@ -185,25 +216,30 @@ setAccountValue() {
 	}
 	return 0;
 }
+
 onPlayerDisconnect(){
 	self waittill("disconnect");
 	/*
-		logPrint("IW4MBANK;" + self.guid + ";" + self.account_value + "\n"); is that message on the log 
-		file that iw4m read to save the data
+	*	logPrint("IW4MBANK;" + self.guid + ";" + self.account_value + "\n"); 
+	*	This sends the message to the log file for IW4MAdmin to read. It processes
+	*	the player's GUID and the amount in the player's back acount.
 	*/
 	logPrint("IW4MBANK;" + self.guid + ";" + self.account_value + "\n"); 
 }
+
 onplayerconnect_bank_deposit_box()
 {
 	self.account_value = 0; // The default value of the max number of operationthe user can do is 0
 	/*
-		self thread onPlayerDisconnect(); is the process that goes to see when the player exits and 
-		then tells iw4m to save the data of the bank of the user who left the game.
+	*	self thread onPlayerDisconnect(); 
+	*	This is the process that waits till the player disconnects and
+	*	then tells IW4MAdmin to save the data of the bank of the user who left the game.
 	*/
 	self thread onPlayerDisconnect(); 
 	self thread onPlayerSpawned();
 
 }
+
 DecToHex( dec ) {
 	hex = "";
 	digits = strTok("0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F", ",");
@@ -213,6 +249,7 @@ DecToHex( dec ) {
 	}
 	return hex;
 }
+
 bank_deposit_box()
 {
 	level.bank_deposit_max_amount = 250000;
@@ -349,7 +386,7 @@ trigger_deposit_think()
 				self sethintstring( "" );
 			}
 			if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
-				player iprintln("Your bank ammount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amount);
+				player iprintln("Your bank amount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amount);
 		}
 		else
 		{
@@ -402,7 +439,7 @@ trigger_withdraw_think()
 				self sethintstring( "" );
 			}
 			if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
-				player iprintln("Your bank ammount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amounts);
+				player iprintln("Your bank amount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amounts);
 		}
 		else
 		{
@@ -421,9 +458,7 @@ player_withdraw_fee()
 
 show_balance()
 {
-/*
-	iprintlnbold( "DEBUG BANKER: " + self.name + " account worth " + self.account_value );
-*/
+	// iprintlnbold( "DEBUG BANKER: " + self.name + " account worth " + self.account_value );
 }
 
 // Utilities for Json
@@ -503,4 +538,3 @@ isObj(obj) {
 	}
 	return false;
 }
-
