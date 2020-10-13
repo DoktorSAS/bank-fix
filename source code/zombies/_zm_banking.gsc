@@ -46,13 +46,6 @@ init()
 	}
 	
 	/*
-		level.looking_for_bank_money 
-		This is the variable which allows you to manage multiple 
-		users that are trying to access the dvar containing the bank data.
-	*/
-	level.looking_for_bank_money = false; 
-	
-	/*
 		level thread sync_bank_onEnd(); 
 		This will update bank values on IW4MAdmin as soon as the game ends.
 	*/
