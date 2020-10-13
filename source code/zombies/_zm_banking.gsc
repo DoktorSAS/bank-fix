@@ -66,7 +66,7 @@ sync_bank_onEnd() {
 
 setAccountValues() {
 	/*
-		This is the function that updates bank values on IW4MAdmin as soon as the game ends. All the information is 
+		This is the function that sets the account values using IW4MAdmin. All the information is 
 		written on the log file that will be read by IW4MAdmin and saved in a database.
 	*/
 	players = [];
