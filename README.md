@@ -11,7 +11,7 @@ Through these files it will be possible to get the Zombies Server Bank Fully Wor
 - [*IW4M Admin*](https://github.com/RaidMax/IW4M-Admin/releases): To have the bank running on a server you must have IW4M 
 
 ### How does this work?
-Everything in the script is done easy to understand it better. This script uses IW4MAdmin to store bank information related to a specific user using DVARs. When a player enters the game, IW4MAdmin takes the bank data stored in a database and sends it to the GSC code that will set the value of the player's bank contents in the game. When the player leavse the game, the GSC sends a message to the log file, which IW4MAdmin reads, and stores the player's bank information to a database.
+Everything in the script is done easy to understand it better. This script uses IW4MAdmin to store bank information related to a specific user using DVARs. When a player enters the game, IW4MAdmin takes the bank data stored in a database and sends it to the GSC code that will set the value of the player's bank contents in the game. When the player leaves the game, the GSC prints a message to the log file, which IW4MAdmin reads, and stores the player's bank information to a database.
 
 ### How to use it?
 To implement these features takes two minutes, just follow this guide carefully and you will understand how to implement the bank on your servers.
@@ -26,7 +26,7 @@ To implement these features takes two minutes, just follow this guide carefully 
 Write on your .cfg file **set bank_print 0**
 
 ### Video Preview
-[![Watch the video](https://images2.alphacoders.com/795/795968.png)](https://youtu.be/7UgtPc1LcqU)
+[![Watch the video](https://img.youtube.com/vi/7UgtPc1LcqU/hqdefault.jpg)](https://youtu.be/7UgtPc1LcqU)
 
 ## Download
 Download the files from [Github](https://github.com/DoktorSAS/bank-fix)
