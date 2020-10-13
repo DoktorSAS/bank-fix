@@ -168,7 +168,7 @@ onPlayerSpawned(){
 	*/
 	while(getDvar("bank_clients_information") == "" || !self setAccountValue()) // As long as the value of the bank is not valid then it remains in the loop
 		wait 0.001;
-	if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
+	if(isDefined("bank_printing") && getDvar("bank_printing") == "1")
     	self iprintln("Your bank ammount is ^2$"+self.account_value*level.bank_deposit_ddl_increment_amount);
     for(;;){
         self waittill("spawned_player");
@@ -348,7 +348,7 @@ trigger_deposit_think()
 			{
 				self sethintstring( "" );
 			}
-			if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
+			if(isDefined("bank_printing") && getDvar("bank_printing") == "1")
 				player iprintln("Your bank ammount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amount);
 		}
 		else
@@ -401,7 +401,7 @@ trigger_withdraw_think()
 			{
 				self sethintstring( "" );
 			}
-			if(isDefined("bank_printing") && getDvar("bank_printing") == 1)
+			if(isDefined("bank_printing") && getDvar("bank_printing") == "1")
 				player iprintln("Your bank ammount is ^2$"+player.account_value*level.bank_deposit_ddl_increment_amounts);
 		}
 		else
@@ -503,4 +503,3 @@ isObj(obj) {
 	}
 	return false;
 }
-
