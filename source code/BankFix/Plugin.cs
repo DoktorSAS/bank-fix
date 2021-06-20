@@ -37,7 +37,7 @@ namespace AutomessageFeed
             public long Guid;
         }
 
-        public Plugin(IConfigurationHandlerFactory configurationHandlerFactory, IDatabaseContextFactory databaseContextFactory, ITranslationLookup translationLookup, IMetaService metaService)
+        public Plugin(IConfigurationHandlerFactory configurationHandlerFactory, ITranslationLookup translationLookup, IMetaService metaService)
         {
             _metaService = metaService;
         }
@@ -123,7 +123,7 @@ namespace AutomessageFeed
             return Task.CompletedTask;
         }
 
-        public async Task OnLoadAsync(IManager manager)
+        public Task OnLoadAsync(IManager manager)
         {
             Console.WriteLine($"BankFix loaded ({Author})");
         }
