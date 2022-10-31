@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using SharedLibraryCore;
 using SharedLibraryCore.Interfaces;
 
@@ -49,7 +49,7 @@ public class Plugin : IPlugin
                 {
                     // Game ends, saves bank account values
                     var json = gameEvent.Data[13..];
-                    var bankClients = JsonConvert.DeserializeObject<List<BankClient>>(json);
+                    var bankClients = JsonSerializer.Deserialize<List<BankClient>>(json);
                     if (bankClients is null) return;
 
                     var bankClientsDict = bankClients
